@@ -1,0 +1,13 @@
+{
+  "name": "domain-time-tracker",
+  "version": "1.0.0",
+  "description": "Track time spent on each domain",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "typescript": "^5.3.3"
+  }
+}
