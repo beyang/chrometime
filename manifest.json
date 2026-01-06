@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Domain Time Tracker",
+  "name": "ChromeTime",
   "version": "1.0.0",
   "description": "Track time spent on each domain throughout the day",
   "permissions": [

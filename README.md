@@ -1,4 +1,4 @@
-# Domain Time Tracker
+# ChromeTime
 
 A Chrome extension that tracks how much time you spend on each website throughout the day.
 
