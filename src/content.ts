@@ -5,7 +5,7 @@ interface Message {
     settings?: { showHeader: boolean; timezone: string };
 }
 
-const HEADER_ID = 'domain-time-tracker-header';
+const HEADER_ID = 'chrometime-tracker-header';
 const HEADER_HEIGHT = '24px';
 
 let headerElement: HTMLElement | null = null;

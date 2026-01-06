@@ -60,7 +60,7 @@ function renderTimeData(container: HTMLElement, timeData: DomainTimeData): void 
       <div class="domain-row">
         <div class="domain-info">
           <span class="domain-name">${domain}</span>
-          <span class="domain-time">${formatTime(time)}</span>
+          <span class="chrometime">${formatTime(time)}</span>
         </div>
         <div class="progress-bar">
           <div class="progress-fill" style="width: ${percent}%"></div>

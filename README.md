@@ -16,8 +16,8 @@ A Chrome extension that tracks how much time you spend on each website throughou
 ### From source
 
 ```bash
-git clone https://github.com/beyang/domain-time.git
-cd domain-time
+git clone https://github.com/beyang/chrometime.git
+cd chrometime
 npm install
 npm run build
 ```
@@ -26,7 +26,7 @@ Then load in Chrome:
 1. Go to `chrome://extensions/`
 2. Enable **Developer mode** (top right)
 3. Click **Load unpacked**
-4. Select the `domain-time` folder
+4. Select the `chrometime` folder
 
 ## Usage
 

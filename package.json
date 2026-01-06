@@ -1,5 +1,5 @@
 {
-  "name": "domain-time-tracker",
+  "name": "chrometime",
   "version": "1.0.0",
   "description": "Track time spent on each domain",
   "scripts": {
