@@ -51,6 +51,10 @@ The extension uses a background service worker to track the active tab. Time is 
 
 The on-page header uses Shadow DOM for style isolation, ensuring compatibility with most websites.
 
+## Built with Amp
+
+This extension was vibecoded over lunch with [Amp](https://ampcode.com), an AI coding agent.
+
 ## License
 
 MIT
