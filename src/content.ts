@@ -6,12 +6,20 @@ interface Message {
 }
 
 const HEADER_ID = 'chrometime-tracker-header';
-const HEADER_HEIGHT = '24px';
 
 let headerElement: HTMLElement | null = null;
 let shadowRoot: ShadowRoot | null = null;
 let currentDomain: string = window.location.hostname;
 let showHeader = false;
+
+function isPageDark(): boolean {
+    const bg = window.getComputedStyle(document.body).backgroundColor;
+    const match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+    if (!match) return false;
+    const [, r, g, b] = match.map(Number);
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance < 0.5;
+}
 
 function formatTime(ms: number): string {
     const totalSeconds = Math.floor(ms / 1000);
@@ -38,38 +46,38 @@ function createHeader(): HTMLElement {
 
     shadowRoot = header.attachShadow({ mode: 'closed' });
 
+    const dark = isPageDark();
+    const bgColor = dark ? 'rgba(40, 40, 40, 0.9)' : 'rgba(220, 220, 220, 0.9)';
+    const domainColor = dark ? '#aaa' : '#555';
+    const timeColor = dark ? '#a0c0e0' : '#4a6a8a';
+
     const style = document.createElement('style');
     style.textContent = `
     :host {
       all: initial;
       display: block !important;
       position: fixed !important;
-      top: 0 !important;
+      bottom: 0 !important;
       left: 0 !important;
-      right: 0 !important;
-      height: ${HEADER_HEIGHT} !important;
       z-index: 2147483647 !important;
       pointer-events: none !important;
     }
     .header-bar {
-      display: flex !important;
+      display: inline-flex !important;
       align-items: center !important;
-      justify-content: center !important;
-      height: 100% !important;
-      background: linear-gradient(to right, #1a1a2e, #16213e) !important;
-      color: #eee !important;
+      padding: 4px 8px !important;
+      background: ${bgColor} !important;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-      font-size: 12px !important;
-      font-weight: 500 !important;
+      font-size: 11px !important;
+      font-weight: 300 !important;
       letter-spacing: 0.3px !important;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
     }
     .domain {
-      color: #64b5f6 !important;
+      color: ${domainColor} !important;
       margin-right: 6px !important;
     }
     .time {
-      color: #81c784 !important;
+      color: ${timeColor} !important;
       font-variant-numeric: tabular-nums !important;
     }
   `;
@@ -89,11 +97,17 @@ function insertHeader(): void {
         return;
     }
 
-    headerElement = createHeader();
+    const doInsert = () => {
+        headerElement = createHeader();
+        if (document.body) {
+            document.body.appendChild(headerElement);
+        }
+    };
 
-    if (document.body) {
-        document.body.insertBefore(headerElement, document.body.firstChild);
-        document.body.style.setProperty('margin-top', HEADER_HEIGHT, 'important');
+    if (document.readyState === 'complete') {
+        setTimeout(doInsert, 100);
+    } else {
+        window.addEventListener('load', () => setTimeout(doInsert, 100), { once: true });
     }
 }
 
@@ -103,7 +117,6 @@ function removeHeader(): void {
         existing.remove();
     }
     headerElement = null;
-    document.body?.style.removeProperty('margin-top');
 }
 
 function updateHeaderTime(time: number): void {
